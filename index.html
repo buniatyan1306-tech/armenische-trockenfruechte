@@ -3,328 +3,257 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Armenische Trockenfrüchte — Test</title>
+  <title>Armenische Trockenfrüchte</title>
   <style>
-    :root{
-      --bg:#fbf9f6; --card:#fff; --accent:#2d8659; --danger:#cc4444; --muted:#666;
-      --maxw:1200px;
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #faf7f2;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:Inter, "Segoe UI", Arial, sans-serif; background:var(--bg); color:#222;
-      -webkit-font-smoothing:antialiased;
-    }
+    body.dark { background: #222; color: #eee; }
 
-    header{
-      background:linear-gradient(90deg,#7b3f00,#935c2a);
-      color:#fff; padding:26px 16px; text-align:center;
-      box-shadow:0 3px 10px rgba(0,0,0,0.06);
+    header {
+      background: linear-gradient(90deg,#9c4d2d,#d07a42);
+      color:#fff;text-align:center;
+      padding: 24px 12px;
     }
-    header h1{margin:0;font-size:1.6rem;letter-spacing:0.2px}
-    .intro{max-width:var(--maxw);margin:18px auto;padding:8px 16px;text-align:center;color:var(--muted)}
+    header h1 { margin:0;font-size:1.9rem }
 
-    .grid{max-width:var(--maxw);margin:12px auto;padding:12px; display:grid; gap:18px;
-      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    .intro {
+      text-align:center;margin:20px auto;max-width:700px;color:#555;font-size:1.1rem
     }
-    .card{
-      background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.06);
-      display:flex; flex-direction:column; align-items:stretch;
-      transition:transform .16s ease, box-shadow .16s ease;
-    }
-    .card:hover{ transform:translateY(-6px); box-shadow:0 12px 26px rgba(0,0,0,0.08); }
-    .thumb{
-      width:100%; height:180px; object-fit:cover; display:block; cursor:pointer; background:#f2f2f2;
-    }
-    .card-body{padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
-    .card h2{margin:0 0 8px;font-size:1.05rem}
-    .prices{color:var(--muted); margin-bottom:10px; line-height:1.4}
-    .btns{display:flex; gap:10px; margin-top:8px}
-    .buy-btn, .no-btn{
-      flex:1; padding:10px 12px; border-radius:8px; text-align:center; text-decoration:none; color:#fff;
-      font-weight:600; cursor:pointer; border:none;
-    }
-    .buy-btn{background:var(--accent)}
-    .buy-btn[disabled]{opacity:.7; cursor:default}
-    .no-btn{background:var(--danger)}
+    body.dark .intro {color:#ccc}
 
-    footer{padding:18px;text-align:center;color:var(--muted); font-size:.95rem; margin-top:8px;}
+    /* Slider */
+    .slider {max-width:1000px;margin:20px auto;overflow:hidden;border-radius:12px}
+    .slides {display:flex;transition:transform 0.6s ease}
+    .slide {min-width:100%;text-align:center}
+    .slide img {width:100%;height:400px;object-fit:cover}
 
-    /* Lightbox overlay */
-    .overlay{
-      position:fixed; inset:0; display:none; z-index:1200; background:rgba(0,0,0,0.75);
-      align-items:center; justify-content:center; padding:20px;
-    }
+    /* Grid Produkte */
+    .grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1200px;margin:20px auto;padding:0 12px}
+    .card {background:#fff;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.08);overflow:hidden;transition:.2s}
+    body.dark .card {background:#333}
+    .card:hover{transform:translateY(-6px);box-shadow:0 10px 20px rgba(0,0,0,0.15)}
+    .thumb{width:100%;height:180px;object-fit:cover;cursor:pointer;transition:transform 0.3s}
+    .thumb:hover{transform:scale(1.05)}
+    .card-body{padding:14px}
+    .card h2{margin:0 0 10px;font-size:1.2rem;color:#333}
+    body.dark .card h2 {color:#eee}
+    .prices{color:#777;line-height:1.4;margin-bottom:12px}
+    body.dark .prices{color:#bbb}
+
+    .btns{display:flex;gap:10px}
+    .btn{flex:1;padding:10px;border-radius:8px;cursor:pointer;font-weight:600;border:none;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:6px}
+    .yes{background:#2d8659;color:#fff}
+    .yes:disabled{opacity:.7}
+    .no{background:#e04f4f;color:#fff}
+
+    footer{margin-top:40px;padding:20px;text-align:center;color:#777;font-size:.9rem}
+    body.dark footer{color:#aaa}
+
+    /* Lightbox */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
     .overlay.show{display:flex}
-    .overlay .figure{position:relative; max-width:95%; max-height:95%}
-    .overlay img{max-width:100%; max-height:80vh; border-radius:8px; display:block}
-    .overlay .caption{color:#fff; text-align:center; margin-top:8px}
-    .close-btn{
-      position:absolute; top:-12px; right:-12px; background:#fff; color:#333; border-radius:999px;
-      width:38px;height:38px; display:inline-flex; align-items:center; justify-content:center;
-      box-shadow:0 6px 18px rgba(0,0,0,0.2); cursor:pointer; font-weight:700;
-    }
+    .overlay img{max-width:90%;max-height:80vh;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    .close-btn{position:absolute;top:20px;right:20px;background:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px}
 
-    /* Modal (Feedback) */
-    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:1300;background:rgba(0,0,0,0.6)}
+    /* Feedback Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1100;background:rgba(0,0,0,.6)}
     .modal.show{display:flex}
-    .modal .card{max-width:420px; width:92%; padding:18px}
-    .modal h3{margin:0 0 10px}
-    .modal label{display:block;margin:8px 0; color:#333}
-    .modal textarea{width:100%; min-height:70px; margin-top:6px; border-radius:8px; padding:8px; border:1px solid #ddd}
+    .modal-content{background:#fff;border-radius:14px;padding:20px;max-width:400px;width:92%;box-shadow:0 6px 20px rgba(0,0,0,.2);animation:pop .3s ease}
+    body.dark .modal-content{background:#333;color:#eee}
+    @keyframes pop{from{transform:scale(.8);opacity:.5}to{transform:scale(1);opacity:1}}
+    .modal h3{margin:0 0 14px;font-size:1.2rem;color:#444}
+    body.dark .modal h3{color:#fff}
+    .reasons{display:grid;gap:8px;margin-bottom:12px}
+    .reason{padding:10px;border:1px solid #ddd;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.95rem}
+    .reason:hover{background:#f8f8f8}
+    body.dark .reason{border:1px solid #666}
+    textarea{width:100%;min-height:60px;border-radius:8px;padding:8px;border:1px solid #ccc}
+    body.dark textarea{background:#444;color:#eee;border:1px solid #888}
+    .submit{margin-top:12px;width:100%;background:#2d8659;color:#fff;padding:10px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
 
     /* Toast */
-    .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:20px; background:#111; color:#fff; padding:10px 16px; border-radius:8px; display:none; z-index:1400}
-    .toast.show{display:block}
-    /* placeholder svg style (if image missing) */
-    .placeholder{display:flex;align-items:center;justify-content:center;height:180px;color:#aaa;font-weight:600;background:#fff;border-bottom:1px solid #eee}
-    @media (max-width:420px){ .card h2{font-size:1rem} }
+    .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#333;color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:1200}
+    .toast.show{display:block;animation:fade 2.5s forwards}
+    @keyframes fade{0%{opacity:1}80%{opacity:1}100%{opacity:0}}
+
+    /* Sticky Feedback */
+    .sticky-feedback {
+      position:fixed;bottom:20px;right:20px;z-index:1500;
+      background:#d07a42;color:#fff;padding:12px 16px;
+      border-radius:30px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* Darkmode Button */
+    .darkmode-toggle {
+      position:fixed;top:20px;right:20px;z-index:1500;
+      background:#444;color:#fff;padding:10px 14px;border-radius:30px;cursor:pointer;font-size:.9rem
+    }
+
+    /* Top Rating Box */
+    .rating-box {
+      text-align:center;background:#fff;padding:16px;margin:20px auto;
+      border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);max-width:400px;
+    }
+    body.dark .rating-box{background:#333;color:#fff}
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Armenische Trockenfrüchte</h1>
+  <h1>🍑 Armenische Trockenfrüchte</h1>
 </header>
 
 <div class="intro">
-  Moin — dies ist ein Test. Klick auf „Ja, ich hätte gekauft“ oder sag uns, warum nicht.
+  Willkommen! 😊 Dies ist ein Test: Würden Sie Trockenfrüchte aus Armenien kaufen?<br/>
+  Klicken Sie auf „Ja“ oder „Nein“ und teilen Sie uns Ihre Meinung mit.
 </div>
 
-<div class="grid" id="productGrid">
-  <!-- card template repeated: make sure you upload matching images into assets/ folder with these exact filenames -->
+<!-- Slider -->
+<div class="slider">
+  <div class="slides" id="slides">
+    <div class="slide"><img src="assets/apricots.jpg" alt="Aprikosen"></div>
+    <div class="slide"><img src="assets/mango.jpg" alt="Mango"></div>
+    <div class="slide"><img src="assets/tomatoes.jpg" alt="Tomaten"></div>
+  </div>
+</div>
+
+<!-- Top Rating Box -->
+<div class="rating-box" id="ratingBox">
+  👍 Schon <b id="yesCount">0</b> Personen haben gesagt, dass sie kaufen würden!
+</div>
+
+<!-- Produkte -->
+<div class="grid">
   <div class="card" data-id="apricots" data-name="Getrocknete Aprikosen">
-    <img class="thumb" src="assets/apricots.jpg" alt="Getrocknete Aprikosen" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Aprikosen')">
+    <img src="assets/apricots.jpg" class="thumb" alt="Aprikosen" onclick="openLightbox(this)">
     <div class="card-body">
-      <div>
-        <h2>Getrocknete Aprikosen</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
+      <h2>Getrocknete Aprikosen</h2>
+      <div class="prices">250g – 4,99 €<br>500g – 8,99 €<br>1000g – 14,99 €</div>
       <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('apricots')">Nein</button>
+        <button class="btn yes" onclick="handleYes(this)">✅ Ja</button>
+        <button class="btn no" onclick="openFeedback('apricots')">❌ Nein</button>
       </div>
     </div>
   </div>
-
-  <div class="card" data-id="walnuts" data-name="Walnüsse (Trommel)">
-    <img class="thumb" src="assets/walnuts.jpg" alt="Walnüsse" onclick="openLightbox(this)" onerror="imgError(this,'Walnüsse')">
-    <div class="card-body">
-      <div>
-        <h2>Walnüsse (Trommel)</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
-      <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('walnuts')">Nein</button>
-      </div>
-    </div>
-  </div>
-
   <div class="card" data-id="mango" data-name="Getrocknete Mango">
-    <img class="thumb" src="assets/mango.jpg" alt="Getrocknete Mango" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Mango')">
+    <img src="assets/mango.jpg" class="thumb" alt="Mango" onclick="openLightbox(this)">
     <div class="card-body">
-      <div>
-        <h2>Getrocknete Mango</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
+      <h2>Getrocknete Mango</h2>
+      <div class="prices">250g – 4,99 €<br>500g – 8,99 €<br>1000g – 14,99 €</div>
       <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('mango')">Nein</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-id="tomatoes" data-name="Getrocknete Tomaten">
-    <img class="thumb" src="assets/tomatoes.jpg" alt="Getrocknete Tomaten" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Tomaten')">
-    <div class="card-body">
-      <div>
-        <h2>Getrocknete Tomaten</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
-      <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('tomatoes')">Nein</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-id="melon" data-name="Getrocknete Honigmelone">
-    <img class="thumb" src="assets/melon.jpg" alt="Getrocknete Honigmelone" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Honigmelone')">
-    <div class="card-body">
-      <div>
-        <h2>Getrocknete Honigmelone</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
-      <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('melon')">Nein</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-id="nuts" data-name="Nuss-Mix">
-    <img class="thumb" src="assets/nuts.jpg" alt="Nüsse Mix" onclick="openLightbox(this)" onerror="imgError(this,'Nüsse Mix')">
-    <div class="card-body">
-      <div>
-        <h2>Nuss-Mix</h2>
-        <div class="prices">
-          <div>250 g – 4,99 €</div>
-          <div>500 g – 8,99 €</div>
-          <div>1000 g – 14,99 €</div>
-        </div>
-      </div>
-      <div class="btns">
-        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
-        <button class="no-btn" onclick="openFeedback('nuts')">Nein</button>
+        <button class="btn yes" onclick="handleYes(this)">✅ Ja</button>
+        <button class="btn no" onclick="openFeedback('mango')">❌ Nein</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Lightbox overlay -->
-<div id="overlay" class="overlay" onclick="overlayClicked(event)">
-  <div class="figure" role="dialog" aria-modal="true">
-    <button class="close-btn" title="Schließen" onclick="closeLightbox()">✕</button>
-    <img id="lightboxImg" src="" alt="">
-    <div class="caption" id="lightboxCaption"></div>
-  </div>
+<!-- Lightbox -->
+<div class="overlay" id="overlay">
+  <button class="close-btn" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="">
 </div>
 
-<!-- Modal Feedback -->
-<div id="modal" class="modal" aria-hidden="true">
-  <div class="card">
-    <span style="float:right;cursor:pointer;color:#666;font-size:18px" onclick="closeModal()">✕</span>
-    <h3>Warum nicht?</h3>
+<!-- Feedback Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Warum nicht? 🤔</h3>
     <form id="feedbackForm" onsubmit="submitFeedback(event)">
-      <label><input type="radio" name="reason" value="Zu teuer"> Zu teuer</label>
-      <label><input type="radio" name="reason" value="Kein Interesse"> Kein Interesse</label>
-      <label><input type="radio" name="reason" value="Mag ich nicht"> Mag ich nicht</label>
-      <label><input type="radio" name="reason" value="Sonstiges"> Sonstiges</label>
+      <div class="reasons">
+        <label class="reason"><input type="radio" name="reason" value="Zu teuer"> 💸 Zu teuer</label>
+        <label class="reason"><input type="radio" name="reason" value="Kein Interesse"> 😐 Kein Interesse</label>
+        <label class="reason"><input type="radio" name="reason" value="Mag ich nicht"> 🚫 Mag ich nicht</label>
+        <label class="reason"><input type="radio" name="reason" value="Sonstiges"> ✍️ Sonstiges</label>
+      </div>
       <textarea name="note" placeholder="Dein Grund (optional)"></textarea>
       <input type="hidden" name="productId" id="feedbackProduct">
-      <button type="submit" style="margin-top:10px;width:100%;background:var(--accent);color:#fff;padding:10px;border-radius:8px;border:none">Absenden</button>
+      <button type="submit" class="submit">Absenden</button>
     </form>
   </div>
 </div>
 
-<div id="toast" class="toast">Danke für deine Antwort!</div>
+<div class="toast" id="toast">Danke für deine Antwort! 🎉</div>
 
-<footer>
-  Transparenz: Das ist ein Testprojekt. Wir sammeln nur Interesse-Signale.
-</footer>
+<footer>Dies ist nur ein Test. Wir sammeln anonymes Feedback. © 2025</footer>
+
+<!-- Sticky Buttons -->
+<div class="sticky-feedback" onclick="openFeedback('general')">💬 Feedback geben</div>
+<div class="darkmode-toggle" onclick="toggleDarkmode()">🌙 Darkmode</div>
 
 <script>
-  // helper: if image missing, draw simple SVG placeholder with label
-  function imgError(imgEl, label){
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='675'>
-      <rect width='100%' height='100%' fill='#f4f4f4'/>
-      <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#bbb' font-size='36'>Bild fehlt: ${label}</text>
-    </svg>`;
-    imgEl.onerror = null;
-    imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-    imgEl.style.objectFit = 'contain';
-  }
+const SHEET_URL = "YOUR_SHEET_URL_HERE"; // hier deine Google Apps Script URL einfügen
 
-  // Lightbox
-  function openLightbox(imgEl){
-    const src = imgEl.getAttribute('src');
-    const alt = imgEl.getAttribute('alt') || '';
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightboxImage').alt = alt;
-    document.getElementById('lightboxCaption').textContent = alt;
-    document.getElementById('overlay').classList.add('show');
-  }
-  function closeLightbox(){
-    document.getElementById('overlay').classList.remove('show');
-    document.getElementById('lightboxImg').src = '';
-    document.getElementById('lightboxCaption').textContent = '';
-  }
-  function overlayClicked(e){
-    // close when clicked outside image (target is overlay)
-    if(e.target.id === 'overlay') closeLightbox();
-  }
+function sendToSheet(product, answer, reason="", note="") {
+  fetch(SHEET_URL, {
+    method: "POST",
+    body: JSON.stringify({ 
+      product: product,
+      answer: answer,
+      reason: reason,
+      note: note
+    }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(() => console.log("Gesendet:", product, answer, reason, note))
+  .catch(err => console.error("Fehler:", err));
+}
 
-  // Buy handling: show toast + change button state
-  function handleBuy(button){
-    if(button.disabled) return;
-    // show toast
-    showToast('Vielen Dank — wir haben dein Interesse notiert!');
-    // disable button and change text
-    button.textContent = 'Danke!';
-    button.disabled = true;
-    button.style.opacity = 0.9;
-    // optional: we could record in localStorage for demonstration
-    try{
-      const card = button.closest('.card'); const id = card.dataset.id;
-      const counts = JSON.parse(localStorage.getItem('buyCounts') || '{}');
-      counts[id] = (counts[id] || 0) + 1;
-      localStorage.setItem('buyCounts', JSON.stringify(counts));
-      console.log('Interesse gespeichert (lokal):', counts);
-    }catch(e){/*ignore*/}
-  }
+let yesCount=0;
 
-  // Toast
-  function showToast(text){
-    const t = document.getElementById('toast');
-    t.textContent = text || 'Danke!';
-    t.classList.add('show');
-    setTimeout(()=> t.classList.remove('show'),2500);
-  }
+function handleYes(btn){
+  let card = btn.closest(".card");
+  let product = card.dataset.name;
+  btn.textContent="🎉 Danke!";
+  btn.disabled=true;
+  showToast("Vielen Dank! Wir haben dein Interesse notiert 🙌");
+  sendToSheet(product,"Ja");
+  yesCount++;
+  document.getElementById("yesCount").innerText=yesCount;
+}
 
-  // Feedback modal
-  function openFeedback(productId){
-    document.getElementById('feedbackProduct').value = productId;
-    document.getElementById('modal').classList.add('show');
-    document.getElementById('modal').setAttribute('aria-hidden','false');
-  }
-  function closeModal(){
-    document.getElementById('modal').classList.remove('show');
-    document.getElementById('modal').setAttribute('aria-hidden','true');
-  }
-  function submitFeedback(e){
-    e.preventDefault();
-    const form = document.getElementById('feedbackForm');
-    const formData = new FormData(form);
-    const productId = formData.get('productId');
-    const reason = formData.get('reason') || 'Keine Angabe';
-    const note = formData.get('note') || '';
-    // For now: just show a thank-you and log locally — later you can send this to Google Forms / server
-    closeModal();
-    showToast('Danke für dein Feedback!');
-    console.log('Feedback', {productId, reason, note});
-    // Optionally save to localStorage
-    try{
-      const fb = JSON.parse(localStorage.getItem('feedbacks') || '[]');
-      fb.push({productId, reason, note, at:Date.now()});
-      localStorage.setItem('feedbacks', JSON.stringify(fb));
-    }catch(e){}
-    form.reset();
-  }
+function openFeedback(id){
+  document.getElementById("feedbackProduct").value=id;
+  document.getElementById("modal").classList.add("show");
+}
+function submitFeedback(e){
+  e.preventDefault();
+  let data=new FormData(e.target);
+  let reason=data.get("reason")||"";
+  let note=data.get("note")||"";
+  let prod=data.get("productId");
+  showToast("Danke für dein Feedback 🙏");
+  document.getElementById("modal").classList.remove("show");
+  sendToSheet(prod,"Nein",reason,note);
+}
 
-  // small initialization: if images fail to load replace onload
-  document.querySelectorAll('.thumb').forEach(img=>{
-    img.addEventListener('error', ()=> imgError(img, img.alt || 'Bild'));
-  });
+function openLightbox(img){
+  document.getElementById("lightboxImg").src=img.src;
+  document.getElementById("overlay").classList.add("show");
+}
+function closeLightbox(){ document.getElementById("overlay").classList.remove("show"); }
+
+function showToast(msg){
+  let t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
+}
+
+// Slider auto
+let slideIndex=0;
+setInterval(()=>{
+  const slides=document.getElementById("slides");
+  slideIndex=(slideIndex+1)%slides.children.length;
+  slides.style.transform=`translateX(-${slideIndex*100}%)`;
+},4000);
+
+// Darkmode toggle
+function toggleDarkmode(){ document.body.classList.toggle("dark"); }
 </script>
 </body>
 </html>
