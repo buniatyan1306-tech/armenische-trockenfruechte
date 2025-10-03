@@ -1,285 +1,330 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Armenische Trockenfrüchte</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Armenische Trockenfrüchte — Test</title>
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      background: #fefcf8;
-      color: #333;
+    :root{
+      --bg:#fbf9f6; --card:#fff; --accent:#2d8659; --danger:#cc4444; --muted:#666;
+      --maxw:1200px;
     }
-    header {
-      background: #7b3f00;
-      color: white;
-      padding: 20px;
-      text-align: center;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter, "Segoe UI", Arial, sans-serif; background:var(--bg); color:#222;
+      -webkit-font-smoothing:antialiased;
     }
-    .intro {
-      text-align: center;
-      padding: 20px;
-      font-size: 1.2em;
+
+    header{
+      background:linear-gradient(90deg,#7b3f00,#935c2a);
+      color:#fff; padding:26px 16px; text-align:center;
+      box-shadow:0 3px 10px rgba(0,0,0,0.06);
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
+    header h1{margin:0;font-size:1.6rem;letter-spacing:0.2px}
+    .intro{max-width:var(--maxw);margin:18px auto;padding:8px 16px;text-align:center;color:var(--muted)}
+
+    .grid{max-width:var(--maxw);margin:12px auto;padding:12px; display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
     }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.2s;
+    .card{
+      background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      display:flex; flex-direction:column; align-items:stretch;
+      transition:transform .16s ease, box-shadow .16s ease;
     }
-    .card:hover {
-      transform: scale(1.02);
+    .card:hover{ transform:translateY(-6px); box-shadow:0 12px 26px rgba(0,0,0,0.08); }
+    .thumb{
+      width:100%; height:180px; object-fit:cover; display:block; cursor:pointer; background:#f2f2f2;
     }
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      cursor: pointer;
+    .card-body{padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
+    .card h2{margin:0 0 8px;font-size:1.05rem}
+    .prices{color:var(--muted); margin-bottom:10px; line-height:1.4}
+    .btns{display:flex; gap:10px; margin-top:8px}
+    .buy-btn, .no-btn{
+      flex:1; padding:10px 12px; border-radius:8px; text-align:center; text-decoration:none; color:#fff;
+      font-weight:600; cursor:pointer; border:none;
     }
-    .card h2 {
-      margin: 10px 0 5px;
+    .buy-btn{background:var(--accent)}
+    .buy-btn[disabled]{opacity:.7; cursor:default}
+    .no-btn{background:var(--danger)}
+
+    footer{padding:18px;text-align:center;color:var(--muted); font-size:.95rem; margin-top:8px;}
+
+    /* Lightbox overlay */
+    .overlay{
+      position:fixed; inset:0; display:none; z-index:1200; background:rgba(0,0,0,0.75);
+      align-items:center; justify-content:center; padding:20px;
     }
-    .prices p {
-      margin: 5px 0;
+    .overlay.show{display:flex}
+    .overlay .figure{position:relative; max-width:95%; max-height:95%}
+    .overlay img{max-width:100%; max-height:80vh; border-radius:8px; display:block}
+    .overlay .caption{color:#fff; text-align:center; margin-top:8px}
+    .close-btn{
+      position:absolute; top:-12px; right:-12px; background:#fff; color:#333; border-radius:999px;
+      width:38px;height:38px; display:inline-flex; align-items:center; justify-content:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.2); cursor:pointer; font-weight:700;
     }
-    .btn-group {
-      margin: 15px 0;
-    }
-    .buy-btn, .no-btn {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .buy-btn {
-      background: #2d8659;
-      color: white;
-    }
-    .buy-btn:hover {
-      background: #226644;
-    }
-    .no-btn {
-      background: #cc4444;
-      color: white;
-    }
-    .no-btn:hover {
-      background: #992d2d;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9em;
-      padding: 20px;
-      color: #777;
-    }
-    /* Lightbox */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-    }
-    .lightbox:target {
-      display: flex;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: left;
-    }
-    .modal-content h3 {
-      margin-top: 0;
-    }
-    .modal-content label {
-      display: block;
-      margin: 8px 0;
-    }
-    .modal-content textarea {
-      width: 100%;
-      min-height: 60px;
-      margin-top: 8px;
-    }
-    .close {
-      float: right;
-      font-size: 18px;
-      cursor: pointer;
-      color: #555;
-    }
+
+    /* Modal (Feedback) */
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:1300;background:rgba(0,0,0,0.6)}
+    .modal.show{display:flex}
+    .modal .card{max-width:420px; width:92%; padding:18px}
+    .modal h3{margin:0 0 10px}
+    .modal label{display:block;margin:8px 0; color:#333}
+    .modal textarea{width:100%; min-height:70px; margin-top:6px; border-radius:8px; padding:8px; border:1px solid #ddd}
+
+    /* Toast */
+    .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:20px; background:#111; color:#fff; padding:10px 16px; border-radius:8px; display:none; z-index:1400}
+    .toast.show{display:block}
+    /* placeholder svg style (if image missing) */
+    .placeholder{display:flex;align-items:center;justify-content:center;height:180px;color:#aaa;font-weight:600;background:#fff;border-bottom:1px solid #eee}
+    @media (max-width:420px){ .card h2{font-size:1rem} }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Armenische Trockenfrüchte</h1>
-  </header>
 
-  <div class="intro">
-    <p>Moin, das ist ein Test, um zu wissen, ob Sie Trockenfrüchte aus Armenien kaufen würden.</p>
-  </div>
+<header>
+  <h1>Armenische Trockenfrüchte</h1>
+</header>
 
-  <div class="grid">
-    <!-- Aprikosen -->
-    <div class="card">
-      <a href="#img1"><img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=800" alt="Getrocknete Aprikosen"></a>
-      <h2>Getrocknete Aprikosen</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
-      </div>
-    </div>
+<div class="intro">
+  Moin — dies ist ein Test. Klick auf „Ja, ich hätte gekauft“ oder sag uns, warum nicht.
+</div>
 
-    <!-- Walnüsse -->
-    <div class="card">
-      <a href="#img2"><img src="https://images.unsplash.com/photo-1607083201206-bccdf7f4c2ce?w=800" alt="Walnüsse"></a>
-      <h2>Walnüsse (Trommel)</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
+<div class="grid" id="productGrid">
+  <!-- card template repeated: make sure you upload matching images into assets/ folder with these exact filenames -->
+  <div class="card" data-id="apricots" data-name="Getrocknete Aprikosen">
+    <img class="thumb" src="assets/apricots.jpg" alt="Getrocknete Aprikosen" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Aprikosen')">
+    <div class="card-body">
+      <div>
+        <h2>Getrocknete Aprikosen</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
       </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
-      </div>
-    </div>
-
-    <!-- Mango -->
-    <div class="card">
-      <a href="#img3"><img src="https://images.unsplash.com/photo-1615484477211-8e4bfc52d52a?w=800" alt="Getrocknete Mango"></a>
-      <h2>Getrocknete Mango</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
-      </div>
-    </div>
-
-    <!-- Tomaten -->
-    <div class="card">
-      <a href="#img4"><img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" alt="Getrocknete Tomaten"></a>
-      <h2>Getrocknete Tomaten</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
-      </div>
-    </div>
-
-    <!-- Honigmelone -->
-    <div class="card">
-      <a href="#img5"><img src="https://images.unsplash.com/photo-1592928301476-e66cfcf0f9c2?w=800" alt="Getrocknete Honigmelone"></a>
-      <h2>Getrocknete Honigmelone</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
-      </div>
-    </div>
-
-    <!-- Nuss-Mix -->
-    <div class="card">
-      <a href="#img6"><img src="https://images.unsplash.com/photo-1601004890256-b5c8a77f93f2?w=800" alt="Nüsse Mix"></a>
-      <h2>Nüsse Mix</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <div class="btn-group">
-        <a class="buy-btn">Ja, ich hätte gekauft</a>
-        <a class="no-btn" onclick="openModal()">Nein</a>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('apricots')">Nein</button>
       </div>
     </div>
   </div>
 
-  <!-- Lightbox Bilder -->
-  <div id="img1" class="lightbox"><img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=1200"></div>
-  <div id="img2" class="lightbox"><img src="https://images.unsplash.com/photo-1607083201206-bccdf7f4c2ce?w=1200"></div>
-  <div id="img3" class="lightbox"><img src="https://images.unsplash.com/photo-1615484477211-8e4bfc52d52a?w=1200"></div>
-  <div id="img4" class="lightbox"><img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=1200"></div>
-  <div id="img5" class="lightbox"><img src="https://images.unsplash.com/photo-1592928301476-e66cfcf0f9c2?w=1200"></div>
-  <div id="img6" class="lightbox"><img src="https://images.unsplash.com/photo-1601004890256-b5c8a77f93f2?w=1200"></div>
-
-  <!-- Modal Nein -->
-  <div id="feedbackModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Warum nicht?</h3>
-      <label><input type="radio" name="reason"> Zu teuer</label>
-      <label><input type="radio" name="reason"> Kein Interesse</label>
-      <label><input type="radio" name="reason"> Mag ich nicht</label>
-      <label><input type="radio" name="reason"> Sonstiges</label>
-      <textarea placeholder="Ihr Grund..."></textarea>
-      <button style="margin-top:10px; width:100%; background:#2d8659; color:white; padding:10px; border:none; border-radius:5px;">Absenden</button>
+  <div class="card" data-id="walnuts" data-name="Walnüsse (Trommel)">
+    <img class="thumb" src="assets/walnuts.jpg" alt="Walnüsse" onclick="openLightbox(this)" onerror="imgError(this,'Walnüsse')">
+    <div class="card-body">
+      <div>
+        <h2>Walnüsse (Trommel)</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('walnuts')">Nein</button>
+      </div>
     </div>
   </div>
 
-  <footer>
-    Transparenz: Dies ist ein Testprojekt. Wir sammeln nur Interesse-Signale.
-  </footer>
+  <div class="card" data-id="mango" data-name="Getrocknete Mango">
+    <img class="thumb" src="assets/mango.jpg" alt="Getrocknete Mango" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Mango')">
+    <div class="card-body">
+      <div>
+        <h2>Getrocknete Mango</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('mango')">Nein</button>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    function openModal() {
-      document.getElementById('feedbackModal').style.display = 'flex';
-    }
-    function closeModal() {
-      document.getElementById('feedbackModal').style.display = 'none';
-    }
-  </script>
+  <div class="card" data-id="tomatoes" data-name="Getrocknete Tomaten">
+    <img class="thumb" src="assets/tomatoes.jpg" alt="Getrocknete Tomaten" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Tomaten')">
+    <div class="card-body">
+      <div>
+        <h2>Getrocknete Tomaten</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('tomatoes')">Nein</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-id="melon" data-name="Getrocknete Honigmelone">
+    <img class="thumb" src="assets/melon.jpg" alt="Getrocknete Honigmelone" onclick="openLightbox(this)" onerror="imgError(this,'Getrocknete Honigmelone')">
+    <div class="card-body">
+      <div>
+        <h2>Getrocknete Honigmelone</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('melon')">Nein</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-id="nuts" data-name="Nuss-Mix">
+    <img class="thumb" src="assets/nuts.jpg" alt="Nüsse Mix" onclick="openLightbox(this)" onerror="imgError(this,'Nüsse Mix')">
+    <div class="card-body">
+      <div>
+        <h2>Nuss-Mix</h2>
+        <div class="prices">
+          <div>250 g – 4,99 €</div>
+          <div>500 g – 8,99 €</div>
+          <div>1000 g – 14,99 €</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="buy-btn" onclick="handleBuy(this)">Ja, ich hätte gekauft</button>
+        <button class="no-btn" onclick="openFeedback('nuts')">Nein</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox overlay -->
+<div id="overlay" class="overlay" onclick="overlayClicked(event)">
+  <div class="figure" role="dialog" aria-modal="true">
+    <button class="close-btn" title="Schließen" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- Modal Feedback -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="card">
+    <span style="float:right;cursor:pointer;color:#666;font-size:18px" onclick="closeModal()">✕</span>
+    <h3>Warum nicht?</h3>
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+      <label><input type="radio" name="reason" value="Zu teuer"> Zu teuer</label>
+      <label><input type="radio" name="reason" value="Kein Interesse"> Kein Interesse</label>
+      <label><input type="radio" name="reason" value="Mag ich nicht"> Mag ich nicht</label>
+      <label><input type="radio" name="reason" value="Sonstiges"> Sonstiges</label>
+      <textarea name="note" placeholder="Dein Grund (optional)"></textarea>
+      <input type="hidden" name="productId" id="feedbackProduct">
+      <button type="submit" style="margin-top:10px;width:100%;background:var(--accent);color:#fff;padding:10px;border-radius:8px;border:none">Absenden</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast">Danke für deine Antwort!</div>
+
+<footer>
+  Transparenz: Das ist ein Testprojekt. Wir sammeln nur Interesse-Signale.
+</footer>
+
+<script>
+  // helper: if image missing, draw simple SVG placeholder with label
+  function imgError(imgEl, label){
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='675'>
+      <rect width='100%' height='100%' fill='#f4f4f4'/>
+      <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#bbb' font-size='36'>Bild fehlt: ${label}</text>
+    </svg>`;
+    imgEl.onerror = null;
+    imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    imgEl.style.objectFit = 'contain';
+  }
+
+  // Lightbox
+  function openLightbox(imgEl){
+    const src = imgEl.getAttribute('src');
+    const alt = imgEl.getAttribute('alt') || '';
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxImage').alt = alt;
+    document.getElementById('lightboxCaption').textContent = alt;
+    document.getElementById('overlay').classList.add('show');
+  }
+  function closeLightbox(){
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('lightboxImg').src = '';
+    document.getElementById('lightboxCaption').textContent = '';
+  }
+  function overlayClicked(e){
+    // close when clicked outside image (target is overlay)
+    if(e.target.id === 'overlay') closeLightbox();
+  }
+
+  // Buy handling: show toast + change button state
+  function handleBuy(button){
+    if(button.disabled) return;
+    // show toast
+    showToast('Vielen Dank — wir haben dein Interesse notiert!');
+    // disable button and change text
+    button.textContent = 'Danke!';
+    button.disabled = true;
+    button.style.opacity = 0.9;
+    // optional: we could record in localStorage for demonstration
+    try{
+      const card = button.closest('.card'); const id = card.dataset.id;
+      const counts = JSON.parse(localStorage.getItem('buyCounts') || '{}');
+      counts[id] = (counts[id] || 0) + 1;
+      localStorage.setItem('buyCounts', JSON.stringify(counts));
+      console.log('Interesse gespeichert (lokal):', counts);
+    }catch(e){/*ignore*/}
+  }
+
+  // Toast
+  function showToast(text){
+    const t = document.getElementById('toast');
+    t.textContent = text || 'Danke!';
+    t.classList.add('show');
+    setTimeout(()=> t.classList.remove('show'),2500);
+  }
+
+  // Feedback modal
+  function openFeedback(productId){
+    document.getElementById('feedbackProduct').value = productId;
+    document.getElementById('modal').classList.add('show');
+    document.getElementById('modal').setAttribute('aria-hidden','false');
+  }
+  function closeModal(){
+    document.getElementById('modal').classList.remove('show');
+    document.getElementById('modal').setAttribute('aria-hidden','true');
+  }
+  function submitFeedback(e){
+    e.preventDefault();
+    const form = document.getElementById('feedbackForm');
+    const formData = new FormData(form);
+    const productId = formData.get('productId');
+    const reason = formData.get('reason') || 'Keine Angabe';
+    const note = formData.get('note') || '';
+    // For now: just show a thank-you and log locally — later you can send this to Google Forms / server
+    closeModal();
+    showToast('Danke für dein Feedback!');
+    console.log('Feedback', {productId, reason, note});
+    // Optionally save to localStorage
+    try{
+      const fb = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+      fb.push({productId, reason, note, at:Date.now()});
+      localStorage.setItem('feedbacks', JSON.stringify(fb));
+    }catch(e){}
+    form.reset();
+  }
+
+  // small initialization: if images fail to load replace onload
+  document.querySelectorAll('.thumb').forEach(img=>{
+    img.addEventListener('error', ()=> imgError(img, img.alt || 'Bild'));
+  });
+</script>
 </body>
 </html>
