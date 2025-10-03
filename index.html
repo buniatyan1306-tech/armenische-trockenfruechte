@@ -85,7 +85,7 @@
       padding: 20px;
       color: #777;
     }
-    /* Lightbox (Bild vergrößern) */
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -106,7 +106,7 @@
     .lightbox:target {
       display: flex;
     }
-    /* Feedback Modal */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -156,7 +156,7 @@
   </div>
 
   <div class="grid">
-    <!-- Beispiel Produkt -->
+    <!-- Aprikosen -->
     <div class="card">
       <a href="#img1"><img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=800" alt="Getrocknete Aprikosen"></a>
       <h2>Getrocknete Aprikosen</h2>
@@ -170,12 +170,90 @@
         <a class="no-btn" onclick="openModal()">Nein</a>
       </div>
     </div>
+
+    <!-- Walnüsse -->
+    <div class="card">
+      <a href="#img2"><img src="https://images.unsplash.com/photo-1607083201206-bccdf7f4c2ce?w=800" alt="Walnüsse"></a>
+      <h2>Walnüsse (Trommel)</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
+      </div>
+    </div>
+
+    <!-- Mango -->
+    <div class="card">
+      <a href="#img3"><img src="https://images.unsplash.com/photo-1615484477211-8e4bfc52d52a?w=800" alt="Getrocknete Mango"></a>
+      <h2>Getrocknete Mango</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
+      </div>
+    </div>
+
+    <!-- Tomaten -->
+    <div class="card">
+      <a href="#img4"><img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" alt="Getrocknete Tomaten"></a>
+      <h2>Getrocknete Tomaten</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
+      </div>
+    </div>
+
+    <!-- Honigmelone -->
+    <div class="card">
+      <a href="#img5"><img src="https://images.unsplash.com/photo-1592928301476-e66cfcf0f9c2?w=800" alt="Getrocknete Honigmelone"></a>
+      <h2>Getrocknete Honigmelone</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
+      </div>
+    </div>
+
+    <!-- Nuss-Mix -->
+    <div class="card">
+      <a href="#img6"><img src="https://images.unsplash.com/photo-1601004890256-b5c8a77f93f2?w=800" alt="Nüsse Mix"></a>
+      <h2>Nüsse Mix</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
+      </div>
+    </div>
   </div>
 
-  <!-- Lightbox -->
-  <div id="img1" class="lightbox">
-    <img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=1200" alt="Aprikosen">
-  </div>
+  <!-- Lightbox Bilder -->
+  <div id="img1" class="lightbox"><img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=1200"></div>
+  <div id="img2" class="lightbox"><img src="https://images.unsplash.com/photo-1607083201206-bccdf7f4c2ce?w=1200"></div>
+  <div id="img3" class="lightbox"><img src="https://images.unsplash.com/photo-1615484477211-8e4bfc52d52a?w=1200"></div>
+  <div id="img4" class="lightbox"><img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=1200"></div>
+  <div id="img5" class="lightbox"><img src="https://images.unsplash.com/photo-1592928301476-e66cfcf0f9c2?w=1200"></div>
+  <div id="img6" class="lightbox"><img src="https://images.unsplash.com/photo-1601004890256-b5c8a77f93f2?w=1200"></div>
 
   <!-- Modal Nein -->
   <div id="feedbackModal" class="modal">
