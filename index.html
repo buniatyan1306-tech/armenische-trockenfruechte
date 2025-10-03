@@ -6,20 +6,16 @@
   <title>Armenische Trockenfrüchte</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
-      padding: 0;
       background: #fefcf8;
       color: #333;
     }
     header {
-      background: #8b5e3c;
+      background: #7b3f00;
       color: white;
       padding: 20px;
       text-align: center;
-    }
-    h1 {
-      margin: 0;
     }
     .intro {
       text-align: center;
@@ -43,39 +39,110 @@
       transition: transform 0.2s;
     }
     .card:hover {
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
     .card img {
       width: 100%;
       height: 180px;
       object-fit: cover;
+      cursor: pointer;
     }
     .card h2 {
       margin: 10px 0 5px;
     }
-    .prices {
-      margin: 10px 0;
-    }
     .prices p {
       margin: 5px 0;
     }
-    .buy-btn {
+    .btn-group {
+      margin: 15px 0;
+    }
+    .buy-btn, .no-btn {
       display: inline-block;
-      margin: 10px;
+      margin: 5px;
       padding: 10px 20px;
-      background: #2d8659;
-      color: white;
       border-radius: 5px;
       text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .buy-btn {
+      background: #2d8659;
+      color: white;
     }
     .buy-btn:hover {
       background: #226644;
+    }
+    .no-btn {
+      background: #cc4444;
+      color: white;
+    }
+    .no-btn:hover {
+      background: #992d2d;
     }
     footer {
       text-align: center;
       font-size: 0.9em;
       padding: 20px;
       color: #777;
+    }
+    /* Lightbox (Bild vergrößern) */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+    .lightbox:target {
+      display: flex;
+    }
+    /* Feedback Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: left;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal-content label {
+      display: block;
+      margin: 8px 0;
+    }
+    .modal-content textarea {
+      width: 100%;
+      min-height: 60px;
+      margin-top: 8px;
+    }
+    .close {
+      float: right;
+      font-size: 18px;
+      cursor: pointer;
+      color: #555;
     }
   </style>
 </head>
@@ -89,75 +156,52 @@
   </div>
 
   <div class="grid">
+    <!-- Beispiel Produkt -->
     <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Dried_Apricots.jpg" alt="Getrocknete Aprikosen">
+      <a href="#img1"><img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=800" alt="Getrocknete Aprikosen"></a>
       <h2>Getrocknete Aprikosen</h2>
       <div class="prices">
         <p>250 g – 4,99 €</p>
         <p>500 g – 8,99 €</p>
         <p>1000 g – 14,99 €</p>
       </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
-    </div>
-
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Walnuts_in_shell_and_out.jpg" alt="Walnüsse">
-      <h2>Walnüsse (Trommel)</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
+      <div class="btn-group">
+        <a class="buy-btn">Ja, ich hätte gekauft</a>
+        <a class="no-btn" onclick="openModal()">Nein</a>
       </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
     </div>
+  </div>
 
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Dried_Mango.jpg" alt="Getrocknete Mango">
-      <h2>Getrocknete Mango</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
-    </div>
+  <!-- Lightbox -->
+  <div id="img1" class="lightbox">
+    <img src="https://images.unsplash.com/photo-1604909053369-f7ff9634b23d?w=1200" alt="Aprikosen">
+  </div>
 
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Dried_tomatoes.jpg" alt="Getrocknete Tomaten">
-      <h2>Getrocknete Tomaten</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
-    </div>
-
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Dried_melon.jpg" alt="Getrocknete Honigmelone">
-      <h2>Getrocknete Honigmelone</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
-    </div>
-
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Mixed_nuts.jpg" alt="Nüsse Mix">
-      <h2>Nuss-Mix</h2>
-      <div class="prices">
-        <p>250 g – 4,99 €</p>
-        <p>500 g – 8,99 €</p>
-        <p>1000 g – 14,99 €</p>
-      </div>
-      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+  <!-- Modal Nein -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Warum nicht?</h3>
+      <label><input type="radio" name="reason"> Zu teuer</label>
+      <label><input type="radio" name="reason"> Kein Interesse</label>
+      <label><input type="radio" name="reason"> Mag ich nicht</label>
+      <label><input type="radio" name="reason"> Sonstiges</label>
+      <textarea placeholder="Ihr Grund..."></textarea>
+      <button style="margin-top:10px; width:100%; background:#2d8659; color:white; padding:10px; border:none; border-radius:5px;">Absenden</button>
     </div>
   </div>
 
   <footer>
     Transparenz: Dies ist ein Testprojekt. Wir sammeln nur Interesse-Signale.
   </footer>
+
+  <script>
+    function openModal() {
+      document.getElementById('feedbackModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('feedbackModal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
