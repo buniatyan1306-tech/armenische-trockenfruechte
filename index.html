@@ -1,122 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Trockenfrüchte aus Armenien — Interesse-Check</title>
-
-  <!-- Optional: Google Analytics (GA4) - ERSETZE G-XXXXXXX mit deiner Measurement-ID -->
-  <!-- Siehe Anleitung weiter unten, wie du die ID bekommst. -->
-  <!-- BEGIN GA4 -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-XXXXXXX');
-  </script> -->
-  <!-- END GA4 -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Armenische Trockenfrüchte</title>
   <style>
-    :root{ --bg:#faf7f2; --card:#fff; --accent:#2f855a; --muted:#666;}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:var(--bg); color:#111;}
-    header{padding:28px 16px 8px; text-align:center;}
-    h1{margin:.2rem 0; font-size:1.6rem;}
-    p.lead{margin:0; color:var(--muted);}
-    .wrap{max-width:980px;margin:18px auto;padding:0 16px;}
-    .grid{display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:18px;}
-    .card{background:var(--card); border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;}
-    .card img{width:100%; height:160px; object-fit:cover; display:block;}
-    .card .body{padding:12px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
-    .price{font-weight:700; margin-top:6px;}
-    .buy{display:inline-block; margin-top:10px; background:var(--accent); color:white; border:none; padding:10px 12px; border-radius:8px; cursor:pointer; text-decoration:none; text-align:center;}
-    footer{padding:18px; text-align:center; font-size:.85rem; color:var(--muted);}
-    .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:18px; background:#111; color:white; padding:10px 14px; border-radius:10px; display:none;}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fefcf8;
+      color: #333;
+    }
+    header {
+      background: #8b5e3c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    .intro {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card h2 {
+      margin: 10px 0 5px;
+    }
+    .prices {
+      margin: 10px 0;
+    }
+    .prices p {
+      margin: 5px 0;
+    }
+    .buy-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #2d8659;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .buy-btn:hover {
+      background: #226644;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      padding: 20px;
+      color: #777;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Trockenfrüchte aus Armenien — würdest du sie kaufen?</h1>
-    <p class="lead">Wir testen gerade das Interesse — das ist kein echter Kauf. Klick auf „Ja, hätte ich gekauft“, wenn du Interesse hast.</p>
+    <h1>Armenische Trockenfrüchte</h1>
   </header>
 
-  <main class="wrap">
-    <div id="productGrid" class="grid"></div>
-    <footer>
-      <small>Transparenz: Wir sammeln nur Interesse-Signale. Kontakt/E-Mail nur wenn du sie angibst.</small>
-    </footer>
-  </main>
+  <div class="intro">
+    <p>Moin, das ist ein Test, um zu wissen, ob Sie Trockenfrüchte aus Armenien kaufen würden.</p>
+  </div>
 
-  <div id="toast" class="toast">Danke! Wir melden uns per E-Mail (falls du sie angegeben hast).</div>
+  <div class="grid">
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Dried_Apricots.jpg" alt="Getrocknete Aprikosen">
+      <h2>Getrocknete Aprikosen</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
 
-  <script>
-    // PRODUKTE: passe an
-    const products = [
-      { id: "apricots", name: "Getrocknete Aprikosen 250 g", price: 5.90, img: "https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=60" },
-      { id: "plums",    name: "Getrocknete Pflaumen 250 g",  price: 4.90, img: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=60" },
-      { id: "figs",     name: "Getrocknete Feigen 250 g",    price: 6.50, img: "https://images.unsplash.com/photo-1514516436312-08c3b5f12c14?auto=format&fit=crop&w=800&q=60" }
-    ];
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Walnuts_in_shell_and_out.jpg" alt="Walnüsse">
+      <h2>Walnüsse (Trommel)</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
 
-    // PREFILLED LINKS: ersetze durch die von dir generierten Google Form "Get pre-filled link"
-    const prefilledLinks = {
-      apricots: "PREFILL_LINK_FUER_APRICOTS",
-      plums:    "PREFILL_LINK_FUER_PLUms",
-      figs:     "PREFILL_LINK_FUER_FIGS"
-    };
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Dried_Mango.jpg" alt="Getrocknete Mango">
+      <h2>Getrocknete Mango</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
 
-    function renderProducts(){
-      const grid = document.getElementById('productGrid');
-      grid.innerHTML = '';
-      products.forEach(p=>{
-        const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `
-          <img src="${p.img}" alt="${p.name}" />
-          <div class="body">
-            <div>
-              <div style="font-weight:600">${p.name}</div>
-              <div class="price">${p.price.toFixed(2)} €</div>
-            </div>
-            <div>
-              <button class="buy" onclick="recordIntent('${p.id}')">Ja, hätte ich gekauft</button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Dried_tomatoes.jpg" alt="Getrocknete Tomaten">
+      <h2>Getrocknete Tomaten</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
 
-    function showToast(){
-      const t = document.getElementById('toast');
-      t.style.display='block';
-      setTimeout(()=> t.style.display='none', 2500);
-    }
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Dried_melon.jpg" alt="Getrocknete Honigmelone">
+      <h2>Getrocknete Honigmelone</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
 
-    function recordIntent(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      // 1) Google Analytics Event (wenn GA installiert)
-      try{
-        if(typeof gtag === 'function'){
-          gtag('event','purchase_intent', {
-            currency: 'EUR',
-            value: p.price,
-            items: [{ item_id: id, item_name: p.name }]
-          });
-        }
-      }catch(e){ /* ignore */ }
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Mixed_nuts.jpg" alt="Nüsse Mix">
+      <h2>Nuss-Mix</h2>
+      <div class="prices">
+        <p>250 g – 4,99 €</p>
+        <p>500 g – 8,99 €</p>
+        <p>1000 g – 14,99 €</p>
+      </div>
+      <a href="#" class="buy-btn">Ja, ich hätte gekauft</a>
+    </div>
+  </div>
 
-      // 2) öffne vorgefülltes Google Form in neuem Tab (gibt dir die Antworten zentral)
-      const link = prefilledLinks[id];
-      if(link && !link.startsWith('PREFILL_')){
-        window.open(link, '_blank');
-      } else {
-        // fallback: zeige Dankesnachricht
-        showToast();
-      }
-    }
-
-    // initial render
-    renderProducts();
-  </script>
+  <footer>
+    Transparenz: Dies ist ein Testprojekt. Wir sammeln nur Interesse-Signale.
+  </footer>
 </body>
 </html>
